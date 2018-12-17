@@ -1,0 +1,13 @@
+.vs
+Debug
+*.sdf
+ipch
+*.dll
+*.sdb
+*.obj
+*.idb
+*.pdb
+*.pch
+include
+*.lib
+*.LIB
