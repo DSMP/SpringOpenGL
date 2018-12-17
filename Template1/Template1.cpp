@@ -11,17 +11,29 @@
 void triangle(int a) {
 	glBegin(GL_POLYGON);// OpenGL’a state
 	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);//Red;
-	glVertex3f(0, 0,-9.99);
-	glColor4f(0.0f, 1.0f, 0.0f, 5.0f);//Green
-	glVertex3f(5, 5, -9.99);
-	glColor4f(0.0f, 0.0f, 1.0f, 1.0f);//Blue
-	glVertex3f(0, 5, -9.99);
+	glVertex3f(0, 0, -30);
+	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);//Red;
+	glVertex3f(5, 0, -30);
+	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);//Red;
+	glVertex3f(5, 5, -30);
+	glColor4f(1.0f, 0.0f, 0.0f, 1.0f);//Red;
+	glVertex3f(0, 5, -30);
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	glVertex3f(0, 0, -35);
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	glVertex3f(5, 0, -35);
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	glVertex3f(5, 5, -35);
+	glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
+	glVertex3f(0, 5, -35);
 	glEnd();
 }
 void MyDisplay(void) {
 	// The new scene
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glRotatef(90, 1, 1, 0);
+	glTranslatef(50, -30, 0);
 	triangle(1);
 
 	// The end of scene
@@ -36,7 +48,7 @@ void MyInit(void) {
 	glLoadIdentity();//=1
 	//glOrtho(-300, 300, -300, 300, 0, 100);
 	
-	gluPerspective(100.0, 1.777777777777778, 1, 10);
+	gluPerspective(100.0, 1.777777777777778, 1, 100);
 	//gluPerspective(0.3, 1.777777777777778, 0.5, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();//=1
@@ -46,7 +58,7 @@ void MyInit(void) {
 int main(int argc, char** argv) { //<- for normal API
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB | GLUT_DEPTH);//single buffer and RGBA
-	glutInitWindowSize(600, 600);//initial window size
+	glutInitWindowSize(1100, 600);//initial window size
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("My window");//create widnow, hello title bar
 	MyInit();
