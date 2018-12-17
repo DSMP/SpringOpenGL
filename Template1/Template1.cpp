@@ -58,8 +58,8 @@ void MyDisplay(void) {
 	// The new scene
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glTranslatef(0, 0, -20);
-	glRotatef(90, 1, 1, 1);
+	glTranslatef(0, 0, -5);
+	glRotatef(45, 1, 1, 1);
 	hexagon(1);
 
 	// The end of scene
