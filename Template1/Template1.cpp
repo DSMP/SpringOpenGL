@@ -82,7 +82,7 @@ void MyInit(void) {
 	gluPerspective(70.0, 1.777777777777778, 1, 100);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();//=1
-		gluLookAt(0, 0, -15, 0, 0, 0, -1, 0, 0);
+	gluLookAt(0, 0, -30, 10, 0, 0, -1, 0, 0);
 }
 void OnMotion(int x, int y)
 {
