@@ -16,7 +16,9 @@ GLint previous_x = 0;
 GLint previous_y = 0;
 GLfloat time = 0;
 GLfloat period = (float)(2 * M_PI * sqrt(mass / k_coeff));
-bool valid = false;
+bool growing = true;
+int maxDistance = 1;
+double b = 0.6;
 
 void hexagon(int a) {
 	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
@@ -65,27 +67,29 @@ void hexagon(int a) {
 	glEnd();  // End of drawing color-cube
 }
 void coil(int a) {
+	glPushMatrix();
 	glPointSize(2.0f);
 	glColor3f(0.3, 0.3, 0.3);
 	glBegin(GL_POINTS);
-	for (int t = 0; t < 8*M_PI; t++)
+	for (double t = 0; t < 8*M_PI; t+=0.2)
 	{
-		for (int u = 0; u < 2*M_PI; u++)
+		for (double u = 0; u < 2*M_PI; u+=0.5)
 		{
 			double x = cos(t)*(3+cos(u));
 			double y = sin(t)*(3 + cos(u));
-			double z = 0.6*t + sin(u);
+			double z = b*t + sin(u);
 
 			glVertex3f(x, y, z);
 		}
 	}
 	glEnd();
+	glPopMatrix();
 }
 void MyDisplay(void) {
 	// The new scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	hexagon(1);
-	coil(1);
+	coil(0.6);
 
 	// The end of scene
 	glFlush();//start processing buffered OpenGL routines
@@ -128,11 +132,32 @@ void OnMotion(int x, int y)
 	previous_x = x;
 	previous_y = y;
 }
-void Timer(int value)
+void render(int a)
 {
-	time += 0.1 * period;
+	hexagon(a);
+	coil(a);
 	glutPostRedisplay();
-	glutTimerFunc(50, Timer, 0);
+	Growing();
+	glutTimerFunc(25, render, a);
+}
+void Growing()
+{
+	if (growing)
+	{
+		b+=0.01;
+	}
+	else
+	{
+		b -= 0.01;
+	}
+	if (b <= 0.3)
+	{
+		growing = true;
+	}
+	if (b >= maxDistance)
+	{
+		growing = false;
+	}
 }
 
 int main(int argc, char** argv) { //<- for normal API
@@ -144,7 +169,7 @@ int main(int argc, char** argv) { //<- for normal API
 	MyInit();
 	glutDisplayFunc(MyDisplay);//
 	glutMotionFunc(OnMotion);
-	Timer(0);
+	glutTimerFunc(100, render, 0.6);
 	glutMainLoop();//enter main loop and process events
 	return 0;
 }
