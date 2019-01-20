@@ -67,8 +67,20 @@ void hexagon(int a) {
 	glVertex3f(1.0f, -1.0f, -1.0f);
 	glEnd();  // End of drawing color-cube
 }
+
+void TopHandle()
+{
+	glPushMatrix();
+	glColor3f(0.9, 0.7, 0.6);
+	gluCylinder(gluNewQuadric(),1, 1,6,20,20);
+	glPopMatrix();
+}
 void Spring(int a) {
-	//glPushMatrix();
+	glPushMatrix();
+	//draw top Handle
+	TopHandle();
+	//draw spring
+	glTranslatef(-3, 0, 5);
 	glPointSize(2.0f);
 	glColor3f(0.3, 0.3, 0.3);
 	glBegin(GL_POINTS);
@@ -84,12 +96,14 @@ void Spring(int a) {
 		}
 	}
 	glEnd();
-	//glPopMatrix();
+	//Draw bottom Handle
+
+	glPopMatrix();
 }
 
 void Ball(int a) {
 	glPushMatrix();
-	glTranslatef(0, 0, z_position);
+	glTranslatef(0, 0, z_position+5+5);
 	glColor3f(0.9, 0.3, 0.2);
 	glutSolidSphere(radius, 20, 20);
 	glPopMatrix();
