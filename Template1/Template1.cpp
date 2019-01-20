@@ -66,10 +66,7 @@ void hexagon(int a) {
 }
 void MyDisplay(void) {
 	// The new scene
-	//glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	/*glTranslatef(0, 0, -5);
-	glRotatef(45, 1, 1, 1);*/
 	hexagon(1);
 
 	// The end of scene
@@ -79,17 +76,13 @@ void MyInit(void) {
 	glClearColor(0.0, 0.0, 0.0, 0.0);//select clearing (background) color
 									 /* initialize viewing values */
 	glEnable(GL_DEPTH_TEST);
-	//glViewport(0, 0, 300, 300);//window origin and size
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();//=1
-	//glOrtho(-300, 300, -300, 300, 0, 100);
 	
 	gluPerspective(70.0, 1.777777777777778, 1, 100);
-	//gluPerspective(0.3, 1.777777777777778, 0.5, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();//=1
-	//gluLookAt(0, 0, 0, 0, 0, 0, 0, 0, 0);
-	gluLookAt(0, 0, -15, 0, 0, 0, -1, 0, 0);
+		gluLookAt(0, 0, -15, 0, 0, 0, -1, 0, 0);
 }
 void OnMotion(int x, int y)
 {
