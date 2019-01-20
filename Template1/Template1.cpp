@@ -100,6 +100,14 @@ void Spring(int a) {
 
 	glPopMatrix();
 }
+void BottomHandle(int a)
+{
+	glPushMatrix();
+	glColor3f(0.1, 0.2, 0.1);
+	glTranslatef(0, 0, z_position + 4);
+	gluCylinder(gluNewQuadric(), 1, 1, 6, 20, 20);
+	glPopMatrix();
+}
 
 void Ball(int a) {
 	glPushMatrix();
@@ -114,6 +122,7 @@ void MyDisplay(void) {
 	hexagon(1);
 	Spring(0.6);
 	Ball(1);
+	BottomHandle(1);
 
 	// The end of scene
 	glFlush();//start processing buffered OpenGL routines
@@ -161,6 +170,7 @@ void render(int a)
 	hexagon(a);
 	Spring(a);
 	Ball(a);
+	BottomHandle(a);
 	glutPostRedisplay();
 	Growing();
 	glutTimerFunc(25, render, a);

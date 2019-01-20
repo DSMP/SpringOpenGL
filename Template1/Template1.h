@@ -6,4 +6,6 @@ void Growing();
 
 void TopHandle();
 
+void BottomHandle(int a);
+
 void Ball(int a);
