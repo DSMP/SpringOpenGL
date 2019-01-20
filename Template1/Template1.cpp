@@ -18,6 +18,8 @@ GLfloat period = (float)(sqrt(mass / k_coeff));
 bool growing = true;
 int maxDistance = 1;
 double b = 0.6;
+GLdouble radius = 2.0;
+double z_position = 0;
 
 void hexagon(int a) {
 	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
@@ -65,8 +67,8 @@ void hexagon(int a) {
 	glVertex3f(1.0f, -1.0f, -1.0f);
 	glEnd();  // End of drawing color-cube
 }
-void coil(int a) {
-	glPushMatrix();
+void Spring(int a) {
+	//glPushMatrix();
 	glPointSize(2.0f);
 	glColor3f(0.3, 0.3, 0.3);
 	glBegin(GL_POINTS);
@@ -77,18 +79,27 @@ void coil(int a) {
 			double x = cos(t)*(3+cos(u));
 			double y = sin(t)*(3 + cos(u));
 			double z = b*t + sin(u);
-
+			z_position = z;
 			glVertex3f(x, y, z);
 		}
 	}
 	glEnd();
+	//glPopMatrix();
+}
+
+void Ball(int a) {
+	glPushMatrix();
+	glTranslatef(0, 0, z_position);
+	glColor3f(0.9, 0.3, 0.2);
+	glutSolidSphere(radius, 20, 20);
 	glPopMatrix();
 }
 void MyDisplay(void) {
 	// The new scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	hexagon(1);
-	coil(0.6);
+	Spring(0.6);
+	Ball(1);
 
 	// The end of scene
 	glFlush();//start processing buffered OpenGL routines
@@ -134,7 +145,8 @@ void OnMotion(int x, int y)
 void render(int a)
 {
 	hexagon(a);
-	coil(a);
+	Spring(a);
+	Ball(a);
 	glutPostRedisplay();
 	Growing();
 	glutTimerFunc(25, render, a);
@@ -149,7 +161,7 @@ void Growing()
 	{
 		b -= 0.01;
 	}
-	if (b <= 0.3)
+	if (b <= 0.4)
 	{
 		growing = true;
 	}
