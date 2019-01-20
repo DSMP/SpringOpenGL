@@ -64,10 +64,28 @@ void hexagon(int a) {
 	glVertex3f(1.0f, -1.0f, -1.0f);
 	glEnd();  // End of drawing color-cube
 }
+void coil(int a) {
+	glPointSize(2.0f);
+	glColor3f(0.3, 0.3, 0.3);
+	glBegin(GL_POINTS);
+	for (int t = 0; t < 8*M_PI; t++)
+	{
+		for (int u = 0; u < 2*M_PI; u++)
+		{
+			double x = cos(t)*(3+cos(u));
+			double y = sin(t)*(3 + cos(u));
+			double z = 0.6*t + sin(u);
+
+			glVertex3f(x, y, z);
+		}
+	}
+	glEnd();
+}
 void MyDisplay(void) {
 	// The new scene
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	hexagon(1);
+	coil(1);
 
 	// The end of scene
 	glFlush();//start processing buffered OpenGL routines
