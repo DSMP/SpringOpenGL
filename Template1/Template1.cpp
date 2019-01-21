@@ -20,6 +20,18 @@ int maxDistance = 1;
 double b = 0.6;
 GLdouble radius = 2.0;
 double z_position = 0;
+GLuint _textureId, _textureId2;
+
+void ObjectWithTexture(float tx, float ty, float tz, GLuint texture, GLUquadric *quadric, float radius, int rows, int columns)
+{
+	glTranslatef(tx, ty, tz);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	gluQuadricTexture(quadric, 1);
+	gluSphere(quadric, radius, rows, columns);
+	glTranslatef(-tx, -ty, -tz);
+}
 
 void hexagon(int a) {
 	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
@@ -113,7 +125,8 @@ void Ball(int a) {
 	glPushMatrix();
 	glTranslatef(0, 0, z_position+5+5);
 	glColor3f(0.9, 0.3, 0.2);
-	glutSolidSphere(radius, 20, 20);
+	glBindTexture(GL_TEXTURE_2D, _textureId);
+	gluSphere(gluNewQuadric(), radius, 20, 20);
 	glPopMatrix();
 }
 void MyDisplay(void) {
@@ -127,9 +140,14 @@ void MyDisplay(void) {
 	// The end of scene
 	glFlush();//start processing buffered OpenGL routines
 }
+
 void MyInit(void) {
-	glClearColor(0.0, 0.0, 0.0, 0.0);//select clearing (background) color
-									 /* initialize viewing values */
+	glClearColor(0.0, 0.0, 0.0, 0.0);//select clearing (background) color				
+
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_TEXTURE_2D);
+	glEnable(GL_COLOR_MATERIAL);/* initialize viewing values */
 	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();//=1
@@ -138,6 +156,14 @@ void MyInit(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();//=1
 	gluLookAt(0, 0, -30, 10, 0, 0, -1, 0, 0);
+	
+	unsigned int with, height;
+	with = 100;
+	height = 100;
+
+	Image* image = loadBMP("steel24.bmp");
+	_textureId = loadTexture(image);
+	delete image;
 }
 void OnMotion(int x, int y)
 {
