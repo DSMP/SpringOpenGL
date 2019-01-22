@@ -107,7 +107,7 @@ void TopHandle()
 {
 	glPushMatrix();
 	glColor3f(0.9, 0.7, 0.6);
-	gluCylinder(gluNewQuadric(),1, 1,6-2,20,20);
+	gluCylinder(gluNewQuadric(), 1, 1, 6 - 2, 20, 20);
 	glPopMatrix();
 }
 void Spring(int a) {
@@ -120,13 +120,13 @@ void Spring(int a) {
 	glColor3f(0.3, 0.3, 0.3);
 	int i = 0;
 	glBegin(GL_POINTS);
-	for (double t = 0; t < 8*M_PI; t+=0.2)
+	for (double t = 0; t < 8 * M_PI; t += 0.2)
 	{
-		for (double u = 0; u < 2*M_PI; u+=0.5, ++i)
+		for (double u = 0; u < 2 * M_PI; u += 0.5, ++i)
 		{
-			double x = cos(t)*(3+cos(u));
+			double x = cos(t)*(3 + cos(u));
 			double y = sin(t)*(3 + cos(u));
-			double z = b*t + sin(u);
+			double z = b * t + sin(u);
 			z_position = z;
 			glVertex3f(x, y, z);
 			Points[i].t = t; Points[i].u = u;
@@ -135,14 +135,20 @@ void Spring(int a) {
 	}
 	glEnd();
 	//QL_Quads
-	glBegin(GL_QUADS);
+	glBegin(GL_QUAD_STRIP);
 	glColor3f(1, 0.2, 0.1);
 	glVertex3f(Points[0].x, Points[0].y, Points[0].z);
+	glVertex3f(Points[13].x, Points[13].y, Points[13].z);
 	glVertex3f(Points[1].x, Points[1].y, Points[1].z);
 	glVertex3f(Points[14].x, Points[14].y, Points[14].z);
+	glColor3f(0.7, 1, 0.1);
+	glVertex3f(Points[2].x, Points[2].y, Points[2].z);
 	glVertex3f(Points[15].x, Points[15].y, Points[15].z);
+	glColor3f(1, 0.2, 0.1);
+	glVertex3f(Points[3].x, Points[3].y, Points[3].z);
+	glVertex3f(Points[16].x, Points[16].y, Points[16].z);
 	glEnd();
-	
+
 	glPopMatrix();
 }
 void BottomHandle(int a)
@@ -156,7 +162,7 @@ void BottomHandle(int a)
 
 void Ball(int a) {
 	glPushMatrix();
-	glTranslatef(0, 0, z_position+5+5);
+	glTranslatef(0, 0, z_position + 5 + 5);
 	glColor3f(0.9, 0.3, 0.2);
 	glBindTexture(GL_TEXTURE_2D, _textureId);
 	gluSphere(gluNewQuadric(), radius, 20, 20);
@@ -184,12 +190,12 @@ void MyInit(void) {
 	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();//=1
-	
+
 	gluPerspective(70.0, 1.777777777777778, 1, 100);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();//=1
 	gluLookAt(0, 0, -30, 10, 0, 0, -1, 0, 0);
-	
+
 	unsigned int with, height;
 	with = 100;
 	height = 100;
@@ -238,7 +244,7 @@ void Growing()
 {
 	if (growing)
 	{
-		b+=0.01;
+		b += 0.01;
 	}
 	else
 	{
