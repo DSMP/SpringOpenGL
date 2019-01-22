@@ -49,7 +49,13 @@ void ObjectWithTexture(float tx, float ty, float tz, GLuint texture, GLUquadric 
 	gluSphere(quadric, radius, rows, columns);
 	glTranslatef(-tx, -ty, -tz);
 }
-
+const int countPoints = (8 * M_PI / 0.2)*(2 * M_PI / 0.5); // its only constatnt not constantExp for arrays declared them size on compile time/stage
+struct Point
+{
+	double x, y, z;
+	double u, t;
+};
+struct Point Points[1500];
 void hexagon(int a) {
 	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
 	  // Top face (y = 1.0f)
@@ -101,7 +107,7 @@ void TopHandle()
 {
 	glPushMatrix();
 	glColor3f(0.9, 0.7, 0.6);
-	gluCylinder(gluNewQuadric(),1, 1,6,20,20);
+	gluCylinder(gluNewQuadric(),1, 1,6-2,20,20);
 	glPopMatrix();
 }
 void Spring(int a) {
@@ -112,21 +118,31 @@ void Spring(int a) {
 	glTranslatef(-3, 0, 5);
 	glPointSize(2.0f);
 	glColor3f(0.3, 0.3, 0.3);
+	int i = 0;
 	glBegin(GL_POINTS);
 	for (double t = 0; t < 8*M_PI; t+=0.2)
 	{
-		for (double u = 0; u < 2*M_PI; u+=0.5)
+		for (double u = 0; u < 2*M_PI; u+=0.5, ++i)
 		{
 			double x = cos(t)*(3+cos(u));
 			double y = sin(t)*(3 + cos(u));
 			double z = b*t + sin(u);
 			z_position = z;
 			glVertex3f(x, y, z);
+			Points[i].t = t; Points[i].u = u;
+			Points[i].x = x; Points[i].y = y; Points[i].z = z;
 		}
 	}
 	glEnd();
-	//Draw bottom Handle
-
+	//QL_Quads
+	glBegin(GL_QUADS);
+	glColor3f(1, 0.2, 0.1);
+	glVertex3f(Points[0].x, Points[0].y, Points[0].z);
+	glVertex3f(Points[1].x, Points[1].y, Points[1].z);
+	glVertex3f(Points[14].x, Points[14].y, Points[14].z);
+	glVertex3f(Points[15].x, Points[15].y, Points[15].z);
+	glEnd();
+	
 	glPopMatrix();
 }
 void BottomHandle(int a)
