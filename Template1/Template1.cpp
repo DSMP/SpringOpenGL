@@ -49,6 +49,7 @@ void ObjectWithTexture(float tx, float ty, float tz, GLuint texture, GLUquadric 
 	gluSphere(quadric, radius, rows, columns);
 	glTranslatef(-tx, -ty, -tz);
 }
+
 const int countPoints = (8 * M_PI / 0.2)*(2 * M_PI / 0.5); // its only constatnt not constantExp for arrays declared them size on compile time/stage
 struct Point
 {
@@ -135,17 +136,24 @@ void Spring(int a) {
 	}
 	glEnd();
 	//QL_Quads
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
+	glBindTexture(GL_TEXTURE_2D, _textureId);
+	glEnable(GL_TEXTURE_2D);
 	for (int j = 0; j < 125; j++)
 	{
 		glBegin(GL_QUAD_STRIP);
 		glColor3f(0.7, 1, 0.1);
 		for (int i = 0; i < 13; i++)
 		{
+			glTexCoord3f(Points[i + 13 * j].x, Points[i + 13 * j].y, Points[i + 13 * j].z);
+			glTexCoord3f(Points[13 + i + 13 * j].x, Points[13 + i + 13 * j].y, Points[13 + i + 13 * j].z);
 			glVertex3f(Points[i + 13*j].x, Points[i + 13 * j].y, Points[i + 13 * j].z);
 			glVertex3f(Points[13 + i + 13 * j].x, Points[13 + i + 13 * j].y, Points[13 + i + 13 * j].z);
 			if (i == 12)
 			{
 				glColor3f(0.2, 0.5, 1);
+				glTexCoord3f(Points[13 * j].x, Points[13 * j].y, Points[13 * j].z);
+				glTexCoord3f(Points[13 * j + 13].x, Points[13 * j + 13].y, Points[13 * j + 13].z);
 				glVertex3f(Points[13 * j].x, Points[13 * j].y, Points[13 * j].z);
 				glVertex3f(Points[13 * j + 13].x, Points[13 * j + 13].y, Points[13 * j + 13].z);
 			}
@@ -168,7 +176,6 @@ void Ball(int a) {
 	glPushMatrix();
 	glTranslatef(0, 0, z_position + 5 + 5);
 	glColor3f(0.9, 0.3, 0.2);
-	glBindTexture(GL_TEXTURE_2D, _textureId);
 	gluSphere(gluNewQuadric(), radius, 20, 20);
 	glPopMatrix();
 }
@@ -188,10 +195,6 @@ void MyInit(void) {
 	glClearColor(0.0, 0.0, 0.0, 0.0);//select clearing (background) color				
 
 	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_NORMALIZE);
-	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_COLOR_MATERIAL);/* initialize viewing values */
-	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();//=1
 
@@ -204,9 +207,9 @@ void MyInit(void) {
 	with = 100;
 	height = 100;
 
-	//Image* image = loadBMP("steel24.bmp");
-	//_textureId = loadTexture(image);
-	//delete image;
+	Image* image = loadBMP("steel24.bmp");
+	_textureId = loadTexture(image);
+	delete image;
 }
 void OnMotion(int x, int y)
 {
