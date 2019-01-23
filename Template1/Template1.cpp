@@ -136,8 +136,6 @@ void Spring(int a) {
 	}
 	glEnd();
 	//QL_Quads
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_DECAL);
-	glBindTexture(GL_TEXTURE_2D, _textureId);
 	glEnable(GL_TEXTURE_2D);
 	for (int j = 0; j < 125; j++)
 	{
@@ -145,22 +143,17 @@ void Spring(int a) {
 		glColor3f(0.7, 1, 0.1);
 		for (int i = 0; i < 13; i++)
 		{
-			glTexCoord3f(Points[i + 13 * j].x, Points[i + 13 * j].y, Points[i + 13 * j].z);
-			glTexCoord3f(Points[13 + i + 13 * j].x, Points[13 + i + 13 * j].y, Points[13 + i + 13 * j].z);
-			glVertex3f(Points[i + 13*j].x, Points[i + 13 * j].y, Points[i + 13 * j].z);
+			glVertex3f(Points[i + 13 * j].x, Points[i + 13 * j].y, Points[i + 13 * j].z);
 			glVertex3f(Points[13 + i + 13 * j].x, Points[13 + i + 13 * j].y, Points[13 + i + 13 * j].z);
 			if (i == 12)
 			{
 				glColor3f(0.2, 0.5, 1);
-				glTexCoord3f(Points[13 * j].x, Points[13 * j].y, Points[13 * j].z);
-				glTexCoord3f(Points[13 * j + 13].x, Points[13 * j + 13].y, Points[13 * j + 13].z);
 				glVertex3f(Points[13 * j].x, Points[13 * j].y, Points[13 * j].z);
 				glVertex3f(Points[13 * j + 13].x, Points[13 * j + 13].y, Points[13 * j + 13].z);
 			}
 		}
 		glEnd();
 	}
-
 	glPopMatrix();
 }
 void BottomHandle(int a)
@@ -206,6 +199,7 @@ void MyInit(void) {
 	unsigned int with, height;
 	with = 100;
 	height = 100;
+
 
 	Image* image = loadBMP("steel24.bmp");
 	_textureId = loadTexture(image);
