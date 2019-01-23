@@ -136,17 +136,20 @@ void Spring(int a) {
 	glEnd();
 	//QL_Quads
 	glBegin(GL_QUAD_STRIP);
-	glColor3f(1, 0.2, 0.1);
-	glVertex3f(Points[0].x, Points[0].y, Points[0].z);
-	glVertex3f(Points[13].x, Points[13].y, Points[13].z);
-	glVertex3f(Points[1].x, Points[1].y, Points[1].z);
-	glVertex3f(Points[14].x, Points[14].y, Points[14].z);
 	glColor3f(0.7, 1, 0.1);
-	glVertex3f(Points[2].x, Points[2].y, Points[2].z);
-	glVertex3f(Points[15].x, Points[15].y, Points[15].z);
-	glColor3f(1, 0.2, 0.1);
-	glVertex3f(Points[3].x, Points[3].y, Points[3].z);
-	glVertex3f(Points[16].x, Points[16].y, Points[16].z);
+	for (int j = 0; j < 1; j++)
+	{
+		for (int i = 0; i < 13; i++)
+		{
+			glVertex3f(Points[i].x, Points[i].y, Points[i].z);
+			glVertex3f(Points[13 + i].x, Points[13 + i].y, Points[13 + i].z);
+			if (i == 12)
+			{
+				glVertex3f(Points[0].x, Points[0].y, Points[0].z);
+				glVertex3f(Points[13].x, Points[13].y, Points[13].z);
+			}
+		}
+	}
 	glEnd();
 
 	glPopMatrix();
@@ -200,9 +203,9 @@ void MyInit(void) {
 	with = 100;
 	height = 100;
 
-	Image* image = loadBMP("steel24.bmp");
-	_textureId = loadTexture(image);
-	delete image;
+	//Image* image = loadBMP("steel24.bmp");
+	//_textureId = loadTexture(image);
+	//delete image;
 }
 void OnMotion(int x, int y)
 {
