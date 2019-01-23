@@ -107,7 +107,7 @@ void TopHandle()
 {
 	glPushMatrix();
 	glColor3f(0.9, 0.7, 0.6);
-	gluCylinder(gluNewQuadric(), 1, 1, 6 - 2, 20, 20);
+	gluCylinder(gluNewQuadric(), 1, 1, 6, 20, 20);
 	glPopMatrix();
 }
 void Spring(int a) {
@@ -135,7 +135,7 @@ void Spring(int a) {
 	}
 	glEnd();
 	//QL_Quads
-	for (int j = 0; j < 3; j++)
+	for (int j = 0; j < 125; j++)
 	{
 		glBegin(GL_QUAD_STRIP);
 		glColor3f(0.7, 1, 0.1);
@@ -159,7 +159,7 @@ void BottomHandle(int a)
 {
 	glPushMatrix();
 	glColor3f(0.1, 0.2, 0.1);
-	glTranslatef(0, 0, z_position + 4);
+	glTranslatef(0, 0, z_position + 4.3);
 	gluCylinder(gluNewQuadric(), 1, 1, 6, 20, 20);
 	glPopMatrix();
 }
