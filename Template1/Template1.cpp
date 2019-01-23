@@ -107,7 +107,7 @@ void hexagon(int a) {
 void TopHandle()
 {
 	glPushMatrix();
-	glColor3f(0.9, 0.7, 0.6);
+	glColor3f(0.7, 1, 0.1);
 	gluCylinder(gluNewQuadric(), 1, 1, 6, 20, 20);
 	glPopMatrix();
 }
@@ -165,7 +165,7 @@ void Spring(int a) {
 void BottomHandle(int a)
 {
 	glPushMatrix();
-	glColor3f(0.1, 0.2, 0.1);
+	glColor3f(0.7, 1, 0.1);
 	glTranslatef(0, 0, z_position + 4.3);
 	gluCylinder(gluNewQuadric(), 1, 1, 6, 20, 20);
 	glPopMatrix();
@@ -174,7 +174,7 @@ void BottomHandle(int a)
 void Ball(int a) {
 	glPushMatrix();
 	glTranslatef(0, 0, z_position + 5 + 5);
-	glColor3f(0.9, 0.3, 0.2);
+	glColor3f(0.4, 0.4, 0.4);
 	gluSphere(gluNewQuadric(), radius, 20, 20);
 	glPopMatrix();
 }
