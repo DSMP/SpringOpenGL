@@ -135,22 +135,23 @@ void Spring(int a) {
 	}
 	glEnd();
 	//QL_Quads
-	glBegin(GL_QUAD_STRIP);
-	glColor3f(0.7, 1, 0.1);
-	for (int j = 0; j < 1; j++)
+	for (int j = 1; j < 2; j++)
 	{
+		glBegin(GL_QUAD_STRIP);
+		glColor3f(0.7, 1, 0.1);
 		for (int i = 0; i < 13; i++)
 		{
-			glVertex3f(Points[i].x, Points[i].y, Points[i].z);
-			glVertex3f(Points[13 + i].x, Points[13 + i].y, Points[13 + i].z);
-			if (i == 12)
+			glVertex3f(Points[i*j].x, Points[i*j].y, Points[i*j].z);
+			glVertex3f(Points[13 + i*j].x, Points[13 + i*j].y, Points[13 + i*j].z);
+			if (i == 13 * (j - 1) + 12)
 			{
-				glVertex3f(Points[0].x, Points[0].y, Points[0].z);
-				glVertex3f(Points[13].x, Points[13].y, Points[13].z);
+				glColor3f(0.2, 0.5, 1);
+				glVertex3f(Points[13 * (j - 1)].x, Points[13 * (j - 1)].y, Points[13 * (j - 1)].z);
+				glVertex3f(Points[13 * (j - 1) + 13].x, Points[13 * (j - 1) + 13].y, Points[13 * (j - 1) + 13].z);
 			}
 		}
+		glEnd();
 	}
-	glEnd();
 
 	glPopMatrix();
 }
