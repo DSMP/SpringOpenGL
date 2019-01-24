@@ -132,11 +132,11 @@ void hexagon(int a) {
 void TopHandle()
 {
 	glPushMatrix();
-	glColor3f(0.8, 0.75, 0.4);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, springIntTexture);
 	gluQuadricTexture(quadric, 1);
+	glColor3f(0.8, 0.75, 0.4);
 	gluCylinder(quadric, 1, 1, 6, 20, 20);
 	glPopMatrix();
 }
@@ -188,7 +188,7 @@ void Spring(int a) {
 			glVertex3f(Points[i + 13 * j].x, Points[i + 13 * j].y, Points[i + 13 * j].z);
 			if (i % 2 == 1)
 			{
-				glTexCoord2f(1, 0);
+				glTexCoord2f(0, 1);
 			}
 			else {
 				glTexCoord2f(1, 0);
@@ -198,7 +198,7 @@ void Spring(int a) {
 			{
 				if (i % 2 == 0)
 				{
-					glTexCoord2f(1, 0);
+					glTexCoord2f(0, 1);
 				}
 				else {
 					glTexCoord2f(1, 0);
@@ -209,7 +209,7 @@ void Spring(int a) {
 					glTexCoord2f(1, 0);
 				}
 				else {
-					glTexCoord2f(1, 0);
+					glTexCoord2f(0, 1);
 				}
 				glVertex3f(Points[13 * j + 13].x, Points[13 * j + 13].y, Points[13 * j + 13].z);
 			}
