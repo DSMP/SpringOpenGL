@@ -177,12 +177,39 @@ void Spring(int a) {
 		glColor3f(0.8, 0.75, 0.4);
 		for (int i = 0; i < 13; i++)
 		{
+			if (i % 2 == 0)
+			{
+				glTexCoord2f(0, 0);
+			}
+			else {
+				glTexCoord2f(1, 1);
+			}
 			glVertex3f(Points[i + 13 * j].x, Points[i + 13 * j].y, Points[i + 13 * j].z);
+			if (i % 2 == 1)
+			{
+				glTexCoord2f(1, 0);
+			}
+			else {
+				glTexCoord2f(1, 0);
+			}
 			glVertex3f(Points[13 + i + 13 * j].x, Points[13 + i + 13 * j].y, Points[13 + i + 13 * j].z);
 			if (i == 12)
 			{
-				glColor3f(0.2, 0.5, 1);
+				if (i % 2 == 0)
+				{
+					glTexCoord2f(1, 0);
+				}
+				else {
+					glTexCoord2f(1, 0);
+				}
 				glVertex3f(Points[13 * j].x, Points[13 * j].y, Points[13 * j].z);
+				if (i % 2 == 1)
+				{
+					glTexCoord2f(1, 0);
+				}
+				else {
+					glTexCoord2f(1, 0);
+				}
 				glVertex3f(Points[13 * j + 13].x, Points[13 * j + 13].y, Points[13 * j + 13].z);
 			}
 		}
