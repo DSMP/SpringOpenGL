@@ -20,7 +20,8 @@ int maxDistance = 1;
 double b = 0.6;
 GLdouble radius = 2.0;
 double z_position = 0;
-GLuint _textureId, _textureId2;
+GLuint woodIntTexture, steelIntTexture, springIntTexture;
+GLUquadric* quadric;
 
 GLuint loadTexture(Image* image) {
 	GLuint textureId;
@@ -61,45 +62,71 @@ void hexagon(int a) {
 	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
 	  // Top face (y = 1.0f)
 	  // Define vertices in counter-clockwise (CCW) order with normal pointing out
-	glColor3f(0.0f, 1.0f, 0.0f);     // Green
+	glBindTexture(GL_TEXTURE_2D, woodIntTexture);
+	glEnable(GL_TEXTURE_2D);
+	glColor3f(0.5f, 0.5f, 0.5f);     // Green
+	glTexCoord2f(0.0, 0.0);
 	glVertex3f(1.0f, 1.0f, -1.0f);
+	glTexCoord2f(0.0, 1.0);
 	glVertex3f(-1.0f, 1.0f, -1.0f);
+	glTexCoord2f(1.0, 0.0);
 	glVertex3f(-1.0f, 1.0f, 1.0f);
+	glTexCoord2f(1.0, 1.0);
 	glVertex3f(1.0f, 1.0f, 1.0f);
 
 	// Bottom face (y = -1.0f)
-	glColor3f(1.0f, 0.5f, 0.0f);     // Orange
+	glColor3f(0.5f, 0.5f, 0.5f);     // Green
+	glTexCoord2f(0.0, 0.0); //texture first
 	glVertex3f(1.0f, -1.0f, 1.0f);
+	glTexCoord2f(0.0, 1.0);
 	glVertex3f(-1.0f, -1.0f, 1.0f);
+	glTexCoord2f(1.0, 0.0);
 	glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(1.0, 1.0);
 	glVertex3f(1.0f, -1.0f, -1.0f);
 
 	// Front face  (z = 1.0f)
-	glColor3f(1.0f, 0.0f, 0.0f);     // Red
+	glColor3f(0.5f, 0.5f, 0.5f);     // Green
+	glTexCoord2f(0.0, 0.0); //texture first
 	glVertex3f(1.0f, 1.0f, 1.0f);
+	glTexCoord2f(0.0, 1.0);
 	glVertex3f(-1.0f, 1.0f, 1.0f);
+	glTexCoord2f(1.0, 0.0);
 	glVertex3f(-1.0f, -1.0f, 1.0f);
+	glTexCoord2f(1.0, 1.0);
 	glVertex3f(1.0f, -1.0f, 1.0f);
 
 	// Back face (z = -1.0f)
-	glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
+	glColor3f(0.5f, 0.5f, 0.5f);     // Green
+	glTexCoord2f(0.0, 0.0); //texture first
 	glVertex3f(1.0f, -1.0f, -1.0f);
+	glTexCoord2f(0.0, 1.0);
 	glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(1.0, 0.0);
 	glVertex3f(-1.0f, 1.0f, -1.0f);
+	glTexCoord2f(1.0, 1.0);
 	glVertex3f(1.0f, 1.0f, -1.0f);
 
 	// Left face (x = -1.0f)
-	glColor3f(0.0f, 0.0f, 1.0f);     // Blue
+	glColor3f(0.5f, 0.5f, 0.5f);     // Green
+	glTexCoord2f(0.0, 0.0); //texture first
 	glVertex3f(-1.0f, 1.0f, 1.0f);
+	glTexCoord2f(0.0, 1.0);
 	glVertex3f(-1.0f, 1.0f, -1.0f);
+	glTexCoord2f(1.0, 0.0);
 	glVertex3f(-1.0f, -1.0f, -1.0f);
+	glTexCoord2f(1.0, 1.0);
 	glVertex3f(-1.0f, -1.0f, 1.0f);
 
 	// Right face (x = 1.0f)
-	glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
+	glColor3f(0.5f, 0.5f, 0.5f);     // Green
+	glTexCoord2f(0.0, 0.0); //texture first
 	glVertex3f(1.0f, 1.0f, -1.0f);
+	glTexCoord2f(0.0, 1.0);
 	glVertex3f(1.0f, 1.0f, 1.0f);
+	glTexCoord2f(1.0, 0.0);
 	glVertex3f(1.0f, -1.0f, 1.0f);
+	glTexCoord2f(1.0, 1.0);
 	glVertex3f(1.0f, -1.0f, -1.0f);
 	glEnd();  // End of drawing color-cube
 }
@@ -139,7 +166,7 @@ void Spring(int a) {
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, _textureId);
+	glBindTexture(GL_TEXTURE_2D, steelIntTexture);
 
 	//QL_Quads
 	glEnable(GL_TEXTURE_2D);
@@ -175,7 +202,11 @@ void Ball(int a) {
 	glPushMatrix();
 	glTranslatef(0, 0, z_position + 5 + 5);
 	glColor3f(0.4, 0.4, 0.4);
-	gluSphere(gluNewQuadric(), radius, 20, 20);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, steelIntTexture);
+	gluQuadricTexture(quadric, 1);
+	gluSphere(quadric, radius, 20, 20);
 	glPopMatrix();
 }
 void MyDisplay(void) {
@@ -205,11 +236,18 @@ void MyInit(void) {
 	unsigned int with, height;
 	with = 100;
 	height = 100;
-
-
-	Image* image = loadBMP("steel24.bmp");
-	_textureId = loadTexture(image);
+	Image* image;
+	image = loadBMP("wood24.bmp");
+	woodIntTexture = loadTexture(image);
 	delete image;
+	/*image = loadBMP("rust24.bmp");
+	springIntTexture = loadTexture(image);
+	delete image;*/
+	image = loadBMP("steel24.bmp");
+	steelIntTexture = loadTexture(image);
+	delete image;
+
+	quadric = gluNewQuadric();
 }
 void OnMotion(int x, int y)
 {
