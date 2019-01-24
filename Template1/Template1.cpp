@@ -62,9 +62,11 @@ void hexagon(int a) {
 	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
 	  // Top face (y = 1.0f)
 	  // Define vertices in counter-clockwise (CCW) order with normal pointing out
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, woodIntTexture);
 	glEnable(GL_TEXTURE_2D);
-	glColor3f(0.5f, 0.5f, 0.5f);     // Green
+	glColor3f(1.0f, 1.0f, 1.0f);     // Green
 	glTexCoord2f(0.0, 0.0);
 	glVertex3f(1.0f, 1.0f, -1.0f);
 	glTexCoord2f(0.0, 1.0);
@@ -75,7 +77,6 @@ void hexagon(int a) {
 	glVertex3f(1.0f, 1.0f, 1.0f);
 
 	// Bottom face (y = -1.0f)
-	glColor3f(0.5f, 0.5f, 0.5f);     // Green
 	glTexCoord2f(0.0, 0.0); //texture first
 	glVertex3f(1.0f, -1.0f, 1.0f);
 	glTexCoord2f(0.0, 1.0);
@@ -86,7 +87,6 @@ void hexagon(int a) {
 	glVertex3f(1.0f, -1.0f, -1.0f);
 
 	// Front face  (z = 1.0f)
-	glColor3f(0.5f, 0.5f, 0.5f);     // Green
 	glTexCoord2f(0.0, 0.0); //texture first
 	glVertex3f(1.0f, 1.0f, 1.0f);
 	glTexCoord2f(0.0, 1.0);
@@ -97,7 +97,6 @@ void hexagon(int a) {
 	glVertex3f(1.0f, -1.0f, 1.0f);
 
 	// Back face (z = -1.0f)
-	glColor3f(0.5f, 0.5f, 0.5f);     // Green
 	glTexCoord2f(0.0, 0.0); //texture first
 	glVertex3f(1.0f, -1.0f, -1.0f);
 	glTexCoord2f(0.0, 1.0);
@@ -108,7 +107,6 @@ void hexagon(int a) {
 	glVertex3f(1.0f, 1.0f, -1.0f);
 
 	// Left face (x = -1.0f)
-	glColor3f(0.5f, 0.5f, 0.5f);     // Green
 	glTexCoord2f(0.0, 0.0); //texture first
 	glVertex3f(-1.0f, 1.0f, 1.0f);
 	glTexCoord2f(0.0, 1.0);
@@ -119,7 +117,6 @@ void hexagon(int a) {
 	glVertex3f(-1.0f, -1.0f, 1.0f);
 
 	// Right face (x = 1.0f)
-	glColor3f(0.5f, 0.5f, 0.5f);     // Green
 	glTexCoord2f(0.0, 0.0); //texture first
 	glVertex3f(1.0f, 1.0f, -1.0f);
 	glTexCoord2f(0.0, 1.0);
@@ -134,8 +131,12 @@ void hexagon(int a) {
 void TopHandle()
 {
 	glPushMatrix();
-	glColor3f(0.7, 1, 0.1);
-	gluCylinder(gluNewQuadric(), 1, 1, 6, 20, 20);
+	glColor3f(0.8, 0.75, 0.4);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, springIntTexture);
+	gluQuadricTexture(quadric, 1);
+	gluCylinder(quadric, 1, 1, 6, 20, 20);
 	glPopMatrix();
 }
 void Spring(int a) {
@@ -166,14 +167,14 @@ void Spring(int a) {
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, steelIntTexture);
+	glBindTexture(GL_TEXTURE_2D, springIntTexture);
 
 	//QL_Quads
 	glEnable(GL_TEXTURE_2D);
 	for (int j = 0; j < 125; j++)
 	{
 		glBegin(GL_QUAD_STRIP);
-		glColor3f(0.7, 1, 0.1);
+		glColor3f(0.8, 0.75, 0.4);
 		for (int i = 0; i < 13; i++)
 		{
 			glVertex3f(Points[i + 13 * j].x, Points[i + 13 * j].y, Points[i + 13 * j].z);
@@ -192,9 +193,13 @@ void Spring(int a) {
 void BottomHandle(int a)
 {
 	glPushMatrix();
-	glColor3f(0.7, 1, 0.1);
+	glColor3f(0.8, 0.75, 0.4);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, springIntTexture);
+	gluQuadricTexture(quadric, 1);
 	glTranslatef(0, 0, z_position + 4.3);
-	gluCylinder(gluNewQuadric(), 1, 1, 6, 20, 20);
+	gluCylinder(quadric, 1, 1, 6, 20, 20);
 	glPopMatrix();
 }
 
@@ -240,9 +245,9 @@ void MyInit(void) {
 	image = loadBMP("wood24.bmp");
 	woodIntTexture = loadTexture(image);
 	delete image;
-	/*image = loadBMP("rust24.bmp");
+	image = loadBMP("rust24.bmp");
 	springIntTexture = loadTexture(image);
-	delete image;*/
+	delete image;
 	image = loadBMP("steel24.bmp");
 	steelIntTexture = loadTexture(image);
 	delete image;
