@@ -59,13 +59,14 @@ struct Point
 };
 struct Point Points[1500];
 void hexagon(int a) {
-	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-	  // Top face (y = 1.0f)
-	  // Define vertices in counter-clockwise (CCW) order with normal pointing out
+	glEnable(GL_TEXTURE_2D);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glBindTexture(GL_TEXTURE_2D, woodIntTexture);
-	glEnable(GL_TEXTURE_2D);
+	glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
+	  // Top face (y = 1.0f)
+	  // Define vertices in counter-clockwise (CCW) order with normal pointing out
+	glColor3f(0.4, 0.24, 0.15);
 	glColor3f(1.0f, 1.0f, 1.0f);     // Green
 	glTexCoord2f(0.0, 0.0);
 	glVertex3f(1.0f, 1.0f, -1.0f);
